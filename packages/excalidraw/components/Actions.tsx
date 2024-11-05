@@ -318,6 +318,7 @@ export const ShapesSwitcher = ({
               if (appState.activeTool.type !== value) {
                 trackEvent("toolbar", value, "ui");
               }
+              /* xenote
               if (value === "image") {
                 app.setActiveTool({
                   type: value,
@@ -326,10 +327,14 @@ export const ShapesSwitcher = ({
               } else {
                 app.setActiveTool({ type: value });
               }
+              */
+              app.setActiveTool({ type: value }); //xenote
             }}
           />
         );
       })}
+      
+      {/*
       <div className="App-toolbar__divider" />
 
       <DropdownMenu open={isExtraToolsMenuOpen}>
@@ -423,6 +428,7 @@ export const ShapesSwitcher = ({
           )}
         </DropdownMenu.Content>
       </DropdownMenu>
+       */}
     </>
   );
 };

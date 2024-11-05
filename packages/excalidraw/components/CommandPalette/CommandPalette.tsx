@@ -475,6 +475,7 @@ function CommandPaletteInner({
             keywords: ["toolbar"],
             viewMode: false,
             perform: ({ event }) => {
+              /* xenote
               if (value === "image") {
                 app.setActiveTool({
                   type: value,
@@ -483,6 +484,8 @@ function CommandPaletteInner({
               } else {
                 app.setActiveTool({ type: value });
               }
+              */
+              app.setActiveTool({ type: value }); //xenote
             },
           };
 
@@ -501,6 +504,7 @@ function CommandPaletteInner({
             app.toggleLock();
           },
         },
+        /*
         {
           label: `${t("labels.textToDiagram")}...`,
           category: DEFAULT_CATEGORIES.tools,
@@ -533,6 +537,7 @@ function CommandPaletteInner({
             }));
           },
         },
+        */
         // {
         //   label: `${t("toolBar.magicframe")}...`,
         //   category: DEFAULT_CATEGORIES.tools,

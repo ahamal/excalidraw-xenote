@@ -20,10 +20,13 @@ export const AppMainMenu: React.FC<{
 }> = React.memo((props) => {
   return (
     <MainMenu>
+      {/* xenote
       <MainMenu.DefaultItems.LoadScene />
+      */}
       <MainMenu.DefaultItems.SaveToActiveFile />
       <MainMenu.DefaultItems.Export />
       <MainMenu.DefaultItems.SaveAsImage />
+      {/* xenote
       {props.isCollabEnabled && (
         <MainMenu.DefaultItems.LiveCollaborationTrigger
           isCollaborating={props.isCollaborating}
@@ -31,9 +34,11 @@ export const AppMainMenu: React.FC<{
         />
       )}
       <MainMenu.DefaultItems.CommandPalette className="highlighted" />
+      */}
       <MainMenu.DefaultItems.SearchMenu />
       <MainMenu.DefaultItems.Help />
       <MainMenu.DefaultItems.ClearCanvas />
+      {/* xenote
       <MainMenu.Separator />
       <MainMenu.ItemLink
         icon={ExcalLogo}
@@ -71,15 +76,19 @@ export const AppMainMenu: React.FC<{
           Visual Debug
         </MainMenu.Item>
       )}
+      */}
       <MainMenu.Separator />
       <MainMenu.DefaultItems.ToggleTheme
         allowSystemTheme
         theme={props.theme}
         onSelect={props.setTheme}
       />
+      <MainMenu.Separator />
+      {/*
       <MainMenu.ItemCustom>
         <LanguageList style={{ width: "100%" }} />
       </MainMenu.ItemCustom>
+      */}
       <MainMenu.DefaultItems.ChangeCanvasBackground />
     </MainMenu>
   );

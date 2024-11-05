@@ -128,6 +128,12 @@ import DebugCanvas, {
 import { AIComponents } from "./components/AI";
 import { ExcalidrawPlusIframeExport } from "./ExcalidrawPlusIframeExport";
 
+// xenote begin
+import { CloseIcon, save } from "../packages/excalidraw/components/icons";
+import Bridge from "./xenote/Bridge";
+const bridge = new Bridge();
+// xenote end
+
 polyfill();
 
 window.EXCALIDRAW_THROTTLE_RENDER = true;
@@ -207,7 +213,49 @@ const initializeScene = async (opts: {
   );
   const externalUrlMatch = window.location.hash.match(/^#url=(.*)$/);
 
+  /* xenote
   const localDataState = importFromLocalStorage();
+  */
+
+
+  /* xenote start */
+  if (window.location.hash) {
+    const errorMessage =
+      "no-error:The libraries have been added. Please go back and refresh the notebook window.";
+
+    return {
+      scene: { appState: { errorMessage } },
+      isExternalScene: false,
+    };
+  }
+
+  try {
+    await new Promise((resolve, reject) => {
+      const done = (e: any) => {
+        clear1();
+        clear2();
+        clearTimeout(timeout);
+        if (e) {
+          reject(e);
+        } else {
+          resolve(null);
+        }
+      };
+      const clear1 = bridge.emitter.on("load", (e) => done(null));
+      const clear2 = bridge.emitter.on("load error", (e) => done(e));
+      const timeout = setTimeout(() => done("timed out"), 2000);
+      bridge.load();
+    });
+  } catch (e) {
+    const errorMessage = "Error while loading the nootbook's image data.";
+    return {
+      scene: { appState: { errorMessage } },
+      isExternalScene: false,
+    };
+  }
+  const localDataState = bridge.getLocalDataState();
+  /* xenote end */
+
 
   let scene: RestoredDataState & {
     scrollToContent?: boolean;
@@ -612,6 +660,10 @@ const ExcalidrawWrapper = () => {
     appState: AppState,
     files: BinaryFiles,
   ) => {
+    if (bridge) { // xenote
+      return bridge.stageForSaveDebounce(elements, appState, files); // xenote
+    }
+
     if (collabAPI?.isCollaborating()) {
       collabAPI.syncElements(elements);
     }
@@ -833,6 +885,38 @@ const ExcalidrawWrapper = () => {
         autoFocus={true}
         theme={editorTheme}
         renderTopRightUI={(isMobile) => {
+          /* xenote begin */
+          const buttonStyle = {
+            width: "auto",
+            fontSize: "0.75rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem"
+          };
+          return (
+            <>
+              {isMobile && <>&nbsp;</>}
+              <button
+                className="dropdown-menu-button"
+                style={buttonStyle}
+                onClick={() => bridge.sendData()}
+              >
+                {save}
+                {!isMobile && <div>Save</div>}
+              </button>
+              <button
+                className="dropdown-menu-button"
+                style={buttonStyle}
+                onClick={() => bridge.cancel()}
+              >
+                {CloseIcon}
+                {!isMobile && <div>Close</div>}
+              </button>
+            </>
+          );
+          /* xenote end */
+
+          /*
           if (isMobile || !collabAPI || isCollabDisabled) {
             return null;
           }
@@ -847,6 +931,7 @@ const ExcalidrawWrapper = () => {
               />
             </div>
           );
+          */
         }}
       >
         <AppMainMenu

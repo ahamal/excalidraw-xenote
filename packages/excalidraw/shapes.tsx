@@ -108,6 +108,7 @@ export const SHAPES = [
     numericKey: KEYS["8"],
     fillable: false,
   },
+  /* xenote
   {
     icon: ImageIcon,
     value: "image",
@@ -115,6 +116,7 @@ export const SHAPES = [
     numericKey: KEYS["9"],
     fillable: false,
   },
+  */
   {
     icon: EraserIcon,
     value: "eraser",

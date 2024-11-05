@@ -16,12 +16,14 @@ export const AppFooter = React.memo(
             alignItems: "center",
           }}
         >
+        {/* xenote
           {isVisualDebuggerEnabled() && <DebugFooter onChange={onChange} />}
           {isExcalidrawPlusSignedUser ? (
             <ExcalidrawPlusAppLink />
           ) : (
             <EncryptedIcon />
           )}
+        */}
         </div>
       </Footer>
     );
