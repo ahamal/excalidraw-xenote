@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "public": "excalidraw-app/build",
+    "site": "xenote-excalidraw",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
